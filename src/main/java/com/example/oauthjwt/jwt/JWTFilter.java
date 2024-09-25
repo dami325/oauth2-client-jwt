@@ -50,12 +50,15 @@ public class JWTFilter extends OncePerRequestFilter {
         //cookie들을 불러온 뒤 Authorization Key에 담긴 쿠키를 찾음
         String authorization = null;
         Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
 
-            log.info("cookie : {}", cookie.getName());
-            if (cookie.getName().equals("Authorization")) {
+        if(cookies != null){
+            for (Cookie cookie : cookies) {
 
-                authorization = cookie.getValue();
+                log.info("cookie : {}", cookie.getName());
+                if (cookie.getName().equals("Authorization")) {
+
+                    authorization = cookie.getValue();
+                }
             }
         }
 
