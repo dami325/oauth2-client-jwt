@@ -1,14 +1,13 @@
-package com.example.oauthjwt.config;
+package com.example.oauthjwt.security.config;
 
-import com.example.oauthjwt.jwt.JWTFilter;
-import com.example.oauthjwt.jwt.JWTUtil;
-import com.example.oauthjwt.oauth2.CustomSuccessHandler;
-import com.example.oauthjwt.service.CustomOAuth2UserService;
+import com.example.oauthjwt.security.jwt.JWTFilter;
+import com.example.oauthjwt.security.jwt.JWTUtil;
+import com.example.oauthjwt.security.oauth2.CustomSuccessHandler;
+import com.example.oauthjwt.security.service.CustomOAuth2UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -77,7 +76,7 @@ public class SecurityConfig {
         //경로별 인가 작업
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/","/login","/join","swagger-ui/**","/v3/api-docs/**").permitAll()
+                        .requestMatchers("/","/login","/join","/logout","swagger-ui/**","/v3/api-docs/**","/error/**","/error-page/**").permitAll()
                         .requestMatchers("/admin").hasAuthority("ADMIN")
                         .anyRequest().authenticated());
 
@@ -90,8 +89,8 @@ public class SecurityConfig {
                 .oauth2Login(oauth2 -> oauth2
                         .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig.userService(customOAuth2UserService))
                         .successHandler(customSuccessHandler)
-                        .loginPage("/")); // 커스텀 로그인 페이지 지정
-
+                        .loginPage("/"))// 커스텀 로그인 페이지 지정
+                .logout(logout -> logout.logoutUrl("/logout"));
 
         //세션 설정 : STATELESS -> 요청한번이 끝나면 소멸됨
         http

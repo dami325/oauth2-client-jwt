@@ -1,8 +1,8 @@
-package com.example.oauthjwt.service;
+package com.example.oauthjwt.security.service;
 
-import com.example.oauthjwt.dto.*;
-import com.example.oauthjwt.entity.UserEntity;
-import com.example.oauthjwt.repository.UserRepository;
+import com.example.oauthjwt.security.dto.*;
+import com.example.oauthjwt.security.entity.UserEntity;
+import com.example.oauthjwt.security.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -40,6 +40,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
             oAuth2Custom = new GoogleCustom(oAuth2User.getAttributes());
         }
+        else if (registrationId.equals("battle")) {
+
+            oAuth2Custom = new BattleCustom(oAuth2User.getAttributes());
+        }
         else {
 
             return null;
@@ -56,7 +60,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             UserEntity userEntity = UserEntity.builder()
                     .username(username)
                     .email(oAuth2Custom.getEmail())
-                    .name(oAuth2Custom.getName())
+                    .oAuthName(oAuth2Custom.getOAuthName())
                     .role("ROLE_USER")
                     .build();
 
@@ -64,7 +68,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
             UserDTO userDTO = new UserDTO();
             userDTO.setUsername(username);
-            userDTO.setName(oAuth2Custom.getName());
+            userDTO.setName(oAuth2Custom.getOAuthName());
             userDTO.setRole("ROLE_USER");
 
             return new CustomOAuth2User(userDTO);
@@ -73,14 +77,14 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         else {
 
             existData.changeEmail(oAuth2Custom.getEmail());
-            existData.changeName(oAuth2Custom.getName());
+            existData.changeName(oAuth2Custom.getOAuthName());
 
             userRepository.save(existData);
 
             // role과 username은 바꾸지 않음
             UserDTO userDTO = new UserDTO();
             userDTO.setUsername(existData.getUsername());
-            userDTO.setName(oAuth2Custom.getName());
+            userDTO.setName(oAuth2Custom.getOAuthName());
             userDTO.setRole(existData.getRole());
 
             return new CustomOAuth2User(userDTO);

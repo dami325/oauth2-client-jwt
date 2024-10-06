@@ -1,4 +1,4 @@
-package com.example.oauthjwt.dto;
+package com.example.oauthjwt.security.dto;
 
 import lombok.Getter;
 import lombok.Setter;

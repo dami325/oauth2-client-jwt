@@ -1,4 +1,4 @@
-package com.example.oauthjwt.dto;
+package com.example.oauthjwt.security.dto;
 
 public interface OAuth2Custom {
 
@@ -9,5 +9,5 @@ public interface OAuth2Custom {
     //이메일
     String getEmail();
     //사용자 실명 (설정한 이름)
-    String getName();
+    String getOAuthName();
 }

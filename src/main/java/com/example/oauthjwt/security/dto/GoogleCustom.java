@@ -1,4 +1,4 @@
-package com.example.oauthjwt.dto;
+package com.example.oauthjwt.security.dto;
 
 import java.util.Map;
 
@@ -36,7 +36,7 @@ public class GoogleCustom implements OAuth2Custom {
     }
 
     @Override
-    public String getName() {
+    public String getOAuthName() {
 
         return attribute.get("name").toString();
     }

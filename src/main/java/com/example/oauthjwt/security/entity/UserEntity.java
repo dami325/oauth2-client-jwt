@@ -1,4 +1,4 @@
-package com.example.oauthjwt.entity;
+package com.example.oauthjwt.security.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,7 +18,8 @@ public class UserEntity {
     private Long id;
 
     private String username;
-    private String name;
+
+    private String oAuthName;
 
     private String email;
 
@@ -29,6 +30,6 @@ public class UserEntity {
     }
 
     public void changeName(String name) {
-        this.name = name;
+        this.oAuthName = name;
     }
 }
