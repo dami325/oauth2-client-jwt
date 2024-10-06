@@ -1,14 +1,17 @@
 package com.example.oauthjwt.controller;
 
-import org.springframework.stereotype.Controller;
+import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class MainController {
 
-//    @GetMapping("/")
-//    @ResponseBody
-//    public String mainAPI() {
-//
-//        return "main route";
-//    }
+    @Operation(summary = "회원가입", description = "")
+    @PostMapping("/join")
+    public ResponseEntity<Void> join() {
+
+        return ResponseEntity.ok().build();
+    }
 }

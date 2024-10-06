@@ -44,3 +44,18 @@ spring:
             user-name-attribute: response
   jwt:
     secret: lstkfkdgodyroqkfwkdbalroqkfwkdbalaaaaaaaaaaaaaaaabbbbb
+
+
+# SWAGGER UI 설정 시작 https://springdoc.org/#properties 참고
+springdoc:
+  packages-to-scan: com.example.oauthjwt
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    path: /
+    disable-swagger-default-url: true
+    display-request-duration: true # API 실행 시 처리 소요 시간의 표시 여부
+    operations-sorter: alpha # 개별 API 알파벳순 정렬
+    enabled: true # SWAGGER UI 활성화
+    tags-sorter: alpha # Tag 알파벳순 정렬
+# SWAGGER UI 설정 끝

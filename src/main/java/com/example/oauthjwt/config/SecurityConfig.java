@@ -74,6 +74,13 @@ public class SecurityConfig {
         http
                 .httpBasic((auth) -> auth.disable());
 
+        //경로별 인가 작업
+        http
+                .authorizeHttpRequests((auth) -> auth
+                        .requestMatchers("/","/login","/join","swagger-ui/**","/v3/api-docs/**").permitAll()
+                        .requestMatchers("/admin").hasAuthority("ADMIN")
+                        .anyRequest().authenticated());
+
         //JWTFilter 추가
         http
                 .addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
@@ -85,11 +92,6 @@ public class SecurityConfig {
                         .successHandler(customSuccessHandler)
                         .loginPage("/")); // 커스텀 로그인 페이지 지정
 
-        //경로별 인가 작업
-        http
-                .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/").permitAll()
-                        .anyRequest().authenticated());
 
         //세션 설정 : STATELESS -> 요청한번이 끝나면 소멸됨
         http
